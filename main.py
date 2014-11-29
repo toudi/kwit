@@ -1,6 +1,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from dialogs.main_window import MainWindow
+from core.dialogs.main_window import MainWindow
+from core import settings
 
 
 if __name__ == '__main__':
@@ -11,4 +12,6 @@ if __name__ == '__main__':
     screen = MainWindow()
     screen.show()
 
-    sys.exit(app.exec_())
+    exitcode = app.exec_()
+    settings.save()
+    sys.exit(exitcode)

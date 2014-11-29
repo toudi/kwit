@@ -2,6 +2,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
 from version import version
+from core.dialogs.contacts import ContactsList
 
 
 class MainWindow(QMainWindow):
@@ -48,3 +49,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(display)
 
         self.pbExit.clicked.connect(self.close)
+        self.pbContacts.clicked.connect(self.showContactsList)
+
+    def showContactsList(self):
+        ContactsList(parent=self).exec()
