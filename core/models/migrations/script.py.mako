@@ -14,7 +14,7 @@ depends_on = ${repr(depends_on)}
 
 from alembic import op
 import sqlalchemy as sa
-import core
+import core.utils.qvariantalchemy
 ${imports if imports else ""}
 
 def upgrade():

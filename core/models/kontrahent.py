@@ -9,10 +9,13 @@ class Kontrahent(AbstractModel):
     id    = Column(Integer, primary_key=True)
     nazwa = Column(String)
     nip   = Column(String)
+    adres = Column(String)
 
     @staticmethod
     def get_header_columns():
         return [
+            ('ID', Kontrahent.id, 'id', {'editable': False}),
             ('Nazwa kontrahenta', Kontrahent.nazwa, 'nazwa', {'editable': True}),
             ('NIP', Kontrahent.nip, 'nip', {}),
+            ('Adres', Kontrahent.adres, 'adres', {}),
         ]

@@ -32,7 +32,17 @@ class AlchemicalTableModel(QAbstractTableModel):
 		self.sort = None
 		self.filter = None
 
+		self.cols_indexes = {col[2]: i for i, col in enumerate(columns)}
+
 		self.refresh()
+
+	def getId(self, index, colname='id'):
+		return self.data(
+			self.createIndex(
+				index.row(),
+				self.cols_indexes[colname]
+			), Qt.EditRole
+		)
 
 	def headerData(self, col, orientation, role):
 		if orientation == Qt.Horizontal and role == Qt.DisplayRole:
@@ -66,6 +76,11 @@ class AlchemicalTableModel(QAbstractTableModel):
 		self.results = q.all()
 		self.count = q.count()
 		self.layoutChanged.emit()
+
+		# start = self.createIndex(0, self.columnCount(None) - 1)
+		# end = self.createIndex(self.count, self.columnCount(None) - 1)
+
+		# self.dataChanged.emit(start, end)
 
 	def flags(self, index):
 		_flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable

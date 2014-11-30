@@ -23,7 +23,7 @@ models_dir = os.path.dirname(os.path.abspath(__file__)) + '/../../../'
 if models_dir not in sys.path:
     sys.path.append(models_dir)
 
-from core.models.kontrahent import Base
+from core.models.abstract import Base
 from core import settings
 target_metadata = Base.metadata
 # target_metadata = None

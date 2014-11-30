@@ -28,7 +28,7 @@ class Integer(types.TypeDecorator):
 
 	def process_bind_param(self, value, dialect):
 		return gen_process_bind_param(
-			long, lambda value: value.toLongLong(),
+			int, lambda value: value.toLongLong(),
 			self, value, dialect)
 
 
@@ -46,7 +46,7 @@ class String(types.TypeDecorator):
 
 	def process_bind_param(self, value, dialect):
 		return gen_process_bind_param(
-			unicode, lambda value: value.toString(),
+			str, lambda value: value.toString(),
 			self, value, dialect)
 
 
@@ -55,7 +55,7 @@ class Enum(types.TypeDecorator):
 
 	def process_bind_param(self, value, dialect):
 		return gen_process_bind_param(
-			unicode, lambda value: value.toString(),
+			str, lambda value: value.toString(),
 			self, value, dialect)
 
 
