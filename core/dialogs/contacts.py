@@ -85,6 +85,7 @@ class ContactsList(QDialog, AbstractWindow):
             )
             if confirmation == QMessageBox.Yes:
                 model.query.filter(Kontrahent.id == model.getId(index)).delete()
+                db.session.commit()
                 model.refresh()
 
 

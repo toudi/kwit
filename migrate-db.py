@@ -3,6 +3,7 @@ from core import db
 # inside of a "create the database" script, first create
 # tables:
 from core.models import *
+from document_types.faktura_np.models import *
 Base.metadata.create_all(db.session.bind)
 
 # then, load the Alembic configuration and generate the

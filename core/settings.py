@@ -23,6 +23,17 @@ def get(key, default=None, expanduser=True):
     return config.get('kwit', key)
 
 
+def get_array(key, default):
+    # chcemy pobrac tablice na zewnatrz, ale jednoczesnie chcemy
+    # zeby do settingsow zapisala sie wartosc z przecinkami
+    # (jesli ustawienia nie ma i przekazujemy defaulta.)
+    return get(key, ','.join(default)).split(',')
+
+
+def set_array(key, value):
+    config.set('kwit', key, ','.join(value))
+
+
 def save():
     with open(config_file, 'w') as fp:
         config.write(fp)

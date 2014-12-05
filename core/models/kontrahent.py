@@ -1,4 +1,4 @@
-from core.utils.qvariantalchemy import String, Integer
+from core.utils.qvariantalchemy import String, Integer, Boolean
 from sqlalchemy import Column
 from core.models.abstract import AbstractModel
 
@@ -10,6 +10,7 @@ class Kontrahent(AbstractModel):
     nazwa = Column(String)
     nip   = Column(String)
     adres = Column(String)
+    sprzedawca = Column(Boolean, default=False)
 
     @staticmethod
     def get_header_columns():

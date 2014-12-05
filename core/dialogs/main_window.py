@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
 from version import version
 from core.dialogs.contacts import ContactsList
+from core.dialogs.documents import DocumentsList
 
 
 class MainWindow(QMainWindow):
@@ -50,6 +51,10 @@ class MainWindow(QMainWindow):
 
         self.pbExit.clicked.connect(self.close)
         self.pbContacts.clicked.connect(self.showContactsList)
+        self.pbDocuments.clicked.connect(self.showDocumentsList)
 
     def showContactsList(self):
         ContactsList(parent=self).exec()
+
+    def showDocumentsList(self):
+        DocumentsList(parent=self).exec()
