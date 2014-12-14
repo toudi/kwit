@@ -4,10 +4,11 @@ from PyQt5.QtGui import QIcon
 from core.dialogs.abstract import AbstractWindow
 from core import settings
 from importlib import import_module
+from core.dialogs import DIALOG_DOCUMENTS_LIST
 
 
 class DocumentsList(AbstractWindow, QDialog):
-
+    WINDOW_TYPE = DIALOG_DOCUMENTS_LIST
     def setupUI(self):
         # cache modulow
         self.document_types = {}
@@ -36,6 +37,14 @@ class DocumentsList(AbstractWindow, QDialog):
         documentsListLayout.addWidget(self.tvDocuments)
 
         self.gbBatchActions = QGroupBox("Zaznaczone")
+        self.gbActions = QGroupBox("Akcje")
+
+        tbCreate = QToolButton()
+        tbCreate.setText("Nowy dokument")
+        tbCreate.setIcon(QIcon("static/img/create.svg"))
+        tbCreate.setIconSize(QSize(25, 25))
+        tbCreate.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.tbCreate = tbCreate
 
         self.tbPrint = QToolButton()
         self.tbPrint.setText("Wydrukuj")
@@ -48,6 +57,10 @@ class DocumentsList(AbstractWindow, QDialog):
         self.tbPDF.setIconSize(QSize(25, 25))
         self.tbPDF.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
 
+        _actionsLayout = QHBoxLayout()
+        _actionsLayout.addWidget(tbCreate)
+
+        self.gbActions.setLayout(_actionsLayout)
 
         batchActionsLayout = QHBoxLayout()
         batchActionsLayout.addWidget(self.tbPrint)
@@ -55,6 +68,7 @@ class DocumentsList(AbstractWindow, QDialog):
         self.gbBatchActions.setLayout(batchActionsLayout)
 
         actionsLayout = QHBoxLayout()
+        actionsLayout.addWidget(self.gbActions)
         actionsLayout.addWidget(self.gbBatchActions)
 
         documentsListLayout.addLayout(actionsLayout)
@@ -103,6 +117,7 @@ class DocumentsList(AbstractWindow, QDialog):
 
     def document_type_selected(self):
         doctype = self.lwDocumentType.currentItem().data(Qt.UserRole)
-        
+
         model = self.document_types[doctype].MODEL.get_qmodel_class()
         self.tvDocuments.setModel(model)
+        self.document_types[doctype].register(self)
