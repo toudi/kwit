@@ -6,6 +6,8 @@ from os.path import dirname
 from plugins.nbp import NBPCurrency
 from decimal import Decimal
 from slownie import *
+from core.models.kontrahent import Sprzedawca
+from core.models.kontrahent import Klient
 
 form_class = uic.loadUiType("%s/np_edit.ui" % dirname(__file__))[0]
 print(form_class)
@@ -18,10 +20,13 @@ class EditNPInvoice(QDialog, form_class):
         self.setupUi(self)
         self.nbp = NBPCurrency()
 
+        self.deIssued.setDate(QDate.currentDate())
         self.cbCurrency.currentIndexChanged.connect(self.calculate_currency)
         self.cbCurrency.currentIndexChanged.emit(0)
         self.deIssued.dateChanged.connect(self.calculate_currency)
         self.bb.rejected.connect(self.reject)
+        self.cbWystawca.setModel(Sprzedawca.get_qmodel_class())
+        self.cbKlient.setModel(Klient.get_qmodel_class())
 
     def calculate_currency(self):
         info = self.nbp.get_currency_info(

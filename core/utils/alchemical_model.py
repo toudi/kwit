@@ -26,11 +26,14 @@ class AlchemicalTableModel(QAbstractTableModel):
 		self.session = session
 		self.fields = columns
 		self.query = session.query(model)
+		if hasattr(model, '_query'):
+			self.query = model._query(self.query)
 
 		self.results = None
 		self.count = None
 		self.sort = None
 		self.filter = None
+		self.model = model
 
 		self.cols_indexes = {col[2]: i for i, col in enumerate(columns)}
 
@@ -120,7 +123,10 @@ class AlchemicalTableModel(QAbstractTableModel):
 			return QVariant()
 
 		row = self.results[index.row()]
+		col = index.column()
 		name = self.fields[index.column()][2]
+		if role == Qt.DisplayRole:
+			name = self.model.DISPLAY_COLUMN
 
 		return str(getattr(row, name))
 

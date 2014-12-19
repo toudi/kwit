@@ -6,6 +6,8 @@ from core.models.abstract import AbstractModel
 class Kontrahent(AbstractModel):
     __tablename__ = 'kwit_kontrahenci'
 
+    DISPLAY_COLUMN = 'nazwa'
+
     id    = Column(Integer, primary_key=True)
     nazwa = Column(String)
     nip   = Column(String)
@@ -20,3 +22,13 @@ class Kontrahent(AbstractModel):
             ('NIP', Kontrahent.nip, 'nip', {}),
             ('Adres', Kontrahent.adres, 'adres', {}),
         ]
+
+class Klient(Kontrahent):
+    @classmethod
+    def _query(cls, basequery):
+        return basequery.filter(Kontrahent.sprzedawca == False)
+
+class Sprzedawca(Kontrahent):
+    @classmethod
+    def _query(cls, basequery):
+        return basequery.filter(Kontrahent.sprzedawca == True)

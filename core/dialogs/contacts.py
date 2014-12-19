@@ -112,11 +112,14 @@ class EditContact(QDialog, AbstractWindow):
         self.pteAdres = QPlainTextEdit(self.kontrahent.adres)
         self.leNIP = QLineEdit(self.kontrahent.nip)
         self.bb = QDialogButtonBox(QDialogButtonBox.Save | QDialogButtonBox.Cancel)
+        self.cbSprzedawca = QCheckBox()
+        self.cbSprzedawca.setChecked(self.kontrahent.sprzedawca or False)
 
 
         editLayout.addRow(QLabel("Nazwa"), self.leNazwa)
         editLayout.addRow(QLabel("Adres"), self.pteAdres)
         editLayout.addRow(QLabel("NIP"), self.leNIP)
+        editLayout.addRow(QLabel("Sprzedawca"), self.cbSprzedawca)
 
         mainLayout.addLayout(editLayout)
         mainLayout.addWidget(self.bb)
@@ -133,6 +136,7 @@ class EditContact(QDialog, AbstractWindow):
             self.kontrahent.nazwa = str(self.leNazwa.text())
             self.kontrahent.adres = self.pteAdres.toPlainText()
             self.kontrahent.nip = self.leNIP.text()
+            self.kontrahent.sprzedawca = self.cbSprzedawca.isChecked()
 
             db.session.add(self.kontrahent)
             db.session.commit()
