@@ -24,3 +24,21 @@ class FakturaNP(AbstractModel):
             ('Termin płatności', FakturaNP.termin_platnosci, 'termin_platnosci', {}),
             ('Zapłacona', FakturaNP.zaplacona, 'zaplacona', {}),
         ]
+
+class FakturaNPPozycja(AbstractModel):
+    __tablename__ = 'kwit_faktury_np_pozycje'
+
+    id = Column(Integer, primary_key=True)
+    faktura_np = Column(Integer, ForeignKey('kwit_faktury_np.id'))
+    usluga = Column(Integer, ForeignKey('kwit_uslugi.id'))
+    cena_pln = Column(String)
+    cena_waluta = Column(String)
+
+    @staticmethod
+    def get_header_columns():
+        return [
+            ('ID', FakturaNPPozycja.id, 'id', {}),
+            ('Usluga', FakturaNPPozycja.usluga, 'usluga', {}),
+            ('Cena (PLN)', FakturaNPPozycja.cena_pln, 'cena_pln', {}),
+            ('Cena (waluta obca)', FakturaNPPozycja.cena_waluta, 'cena_waluta', {})
+        ]

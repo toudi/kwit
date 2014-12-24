@@ -3,6 +3,7 @@ from core.dialogs import DIALOG_DOCUMENTS_LIST
 NAZWA = 'Faktura NP'
 
 from document_types.faktura_np.models import FakturaNP
+from document_types.faktura_np.models import FakturaNPPozycja
 from document_types.faktura_np.dialogs.edit import EditNPInvoice
 
 MODEL = FakturaNP

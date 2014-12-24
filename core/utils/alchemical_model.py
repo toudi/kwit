@@ -47,6 +47,9 @@ class AlchemicalTableModel(QAbstractTableModel):
 			), Qt.EditRole
 		)
 
+	def get_by_id(self, value, column):
+		return getattr(self.query.get(value), column)
+
 	def headerData(self, col, orientation, role):
 		if orientation == Qt.Horizontal and role == Qt.DisplayRole:
 			return QVariant(self.fields[col][0])
